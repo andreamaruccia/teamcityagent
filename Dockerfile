@@ -1,6 +1,6 @@
 FROM microsoft/windowsservercore
 
-RUN powershell -NoProfile -Command "iwr https://chocolatey.org/install.ps1 -UseBasicParsing | invoke-expression"
+RUN powershell -NoProfile -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
 RUN choco install server-jre -y
 RUN choco install nuget.commandline -y
