@@ -1,7 +1,16 @@
-$serverUrl = "http://teamcity-server-a14fac6f.7adb6e9b.svc.dockerapp.io:8111"
 $agentDir = "c:\buildAgent"
 $agentName = "Build-$env:computername"
 $ownPort = "9090"
+$serverUrl = $env:teamcityserverurl
+if ([string]::IsNullOrEmpty($serverUrl))
+{
+    throw "Environment variable teamcityserverurl must not be empty or null"
+}
+
+#download agent
+New-Item -ItemType Directory -Force -Path $agentDir
+Expand-Archive -Path c:\buildAgent.zip -DestinationPath c:\buildAgent
+Remove-Item c:\buildAgent.zip -Force
  
 # Configure agent
 Copy-Item $agentDir\conf\buildAgent.dist.properties $agentDir\conf\buildAgent.properties
